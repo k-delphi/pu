@@ -1,0 +1,123 @@
+/* globals.css */
+
+/* 半色调波浪效果 */
+.halftone-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.8) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.6) 1px, transparent 1px),
+      radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.4) 1px, transparent 1px);
+    background-size: 
+      20px 20px,
+      40px 40px,
+      80px 80px;
+    background-position: 
+      0 0,
+      20px 20px,
+      40px 40px;
+    opacity: 0.1;
+    z-index: -1;
+    animation: waveMotion 15s linear infinite;
+  }
+  
+  .halftone-wave-1 {
+    background-image: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.8) 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation-delay: 0s;
+  }
+  
+  .halftone-wave-2 {
+    background-image: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.6) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation-delay: -5s;
+  }
+  
+  .halftone-wave-3 {
+    background-image: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.4) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation-delay: -10s;
+  }
+  
+  @keyframes waveMotion {
+    0% {
+      background-position: 
+        0 0,
+        20px 20px,
+        40px 40px;
+    }
+    100% {
+      background-position: 
+        20px 20px,
+        40px 40px,
+        80px 80px;
+    }
+  }
+  
+  /* 鼠标交互效果 */
+  * {
+    cursor: none;
+  }
+  
+  .cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(96, 165, 250, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+  }
+  
+  .cursor-outline {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border: 2px solid rgba(96, 165, 250, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9998;
+    transition: all 0.1s ease-out;
+  }
+  
+  .cursor-dot.hover {
+    width: 16px;
+    height: 16px;
+    background-color: rgba(96, 165, 250, 1);
+  }
+  
+  .cursor-outline.hover {
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(96, 165, 250, 0.8);
+  }
+  
+  /* 点击效果 */
+  .click-effect {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(96, 165, 250, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0);
+    animation: clickEffect 0.5s ease-out;
+    z-index: 9997;
+  }
+  
+  @keyframes clickEffect {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(3);
+      opacity: 0;
+    }
+  }
