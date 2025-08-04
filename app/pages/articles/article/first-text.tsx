@@ -1,7 +1,8 @@
-export default function firstText() {
-    return (
-        <div>
-            <h1>我的第一篇文章</h1>
-        </div>
-    )
+// pages/articles/article/first-text.tsx
+import ReactMarkdown from 'react-markdown';
+import MarkdownViewer from '~/components/ui/markdownView';
+import readmeContent from '../md/container.md?raw';
+
+export default function FirstText() {
+  return <MarkdownViewer content={readmeContent} />;
 }

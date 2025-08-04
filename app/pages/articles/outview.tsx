@@ -16,9 +16,9 @@ interface Article {
 const articles: Article[] = [
   {
     id: "first-text",
-    title: "我的第一篇文章",
-    description: "这是我的第一篇文章的简介",
-    imageUrl: "https://img1.baidu.com/it/u=1673000011,316051295&fm=253&fmt=auto&app=138&f=PNG?w=800&h=500",
+    title: "Golang Container包源码解读",
+    description: "Container包是Go语言标准库提供的一个用于实现一些常用的数据结构，如队列、栈、链表、字典、集合等等。",
+    imageUrl: "https://img0.baidu.com/it/u=3017459931,3437887018&fm=253&fmt=auto&app=138&f=JPG?w=600&h=338",
     Component: FirstText,
     tags: ["GO", "后端开发"],
   },

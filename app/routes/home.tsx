@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import  Layout  from "../layout/layout";
+import { Navigate } from "react-router-dom";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +9,5 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Layout />;
+  return <Navigate to="/home" replace />;
 }
