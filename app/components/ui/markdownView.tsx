@@ -59,6 +59,7 @@ export default function MarkdownViewer({ content, className = '' }: MarkdownView
         .prose sup {
           font-size: 0.8em;
           vertical-align: super;
+          color: #4a90e2; /* 添加颜色使上标更明显 */
         }
         .prose ul {
           list-style-type: disc;
@@ -69,6 +70,26 @@ export default function MarkdownViewer({ content, className = '' }: MarkdownView
         .prose ul li {
           margin-top: 0.5em;
           margin-bottom: 0.5em;
+        }
+        /* 添加对上标链接的特殊处理 */
+        .prose a[href^="#fn-"], 
+        .prose a[href^="#fnref-"] {
+          text-decoration: none;
+          color: #4a90e2;
+        }
+        .prose .footnotes {
+          margin-top: 2em;
+          padding-top: 1em;
+          border-top: 1px solid #444;
+        }
+        .prose .footnotes ol {
+          padding-left: 1.5em;
+        }
+        .prose .footnotes li {
+          margin-bottom: 0.5em;
+        }
+        .prose .data-footnote-backref {
+          text-decoration: none;
         }
       `}</style>
       <ReactMarkdown 
@@ -92,6 +113,22 @@ export default function MarkdownViewer({ content, className = '' }: MarkdownView
               </code>
             );
           },
+          // 添加对sup标签的显式支持
+          sup({node, children, ...props}) {
+            return <sup {...props}>{children}</sup>;
+          },
+          // 添加对脚注的特殊处理
+          a({node, children, href, ...props}) {
+            // 处理脚注链接
+            if (href && (href.startsWith('#fn-') || href.startsWith('#fnref-'))) {
+              return (
+                <a href={href} className="footnote-ref" {...props}>
+                  {children}
+                </a>
+              );
+            }
+            return <a href={href} {...props}>{children}</a>;
+          }
         }}
       />
     </div>
