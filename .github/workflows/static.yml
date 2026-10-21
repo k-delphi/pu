@@ -1,8 +1,8 @@
-name: Deploy React Router to GitHub Pages (pnpm)
+name: Deploy React Router v7 (SPA) to GitHub Pages
 
 on:
   push:
-    branches: ["master"] # 如果你的默认分支是 main，请改为 main
+    branches: ["master"]
   workflow_dispatch:
 
 permissions:
@@ -19,37 +19,34 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      # 👇 新增：安装 pnpm（必须先于 setup-node）
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
-          version: 9 # 或你的项目使用的 pnpm 版本
+          version: 9
 
-      # 👇 设置 Node.js，并指定使用 pnpm 缓存
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
-          cache: "pnpm" # 关键：让 setup-node 自动处理 pnpm 缓存
+          node-version: "24"
+          cache: "pnpm"
 
-      # 👇 使用 pnpm 安装依赖，--frozen-lockfile 保证 CI 环境与 lockfile 严格一致
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # 👇 使用 pnpm 构建，GITHUB_PAGES 环境变量供 Vite 配置读取
       - name: Build
         run: pnpm run build
         env:
-          GITHUB_PAGES: "true"
+          GITHUB_PAGES: "true" # 👈 关键：触发 vite.config 中的 base 路径设置
 
-      # 👇 SPA 回退：将 index.html 复制为 404.html
+      # 👇 关键：React Router v7 框架模式的产物在 build/client
+      # 将 index.html 复制为 404.html 以实现 SPA 路由回退
       - name: Create 404.html for SPA fallback
-        run: cp dist/index.html dist/404.html
+        run: cp build/client/index.html build/client/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -57,7 +54,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dist" # 你的构建输出目录
+          path: "./build/client" # 👈 关键：上传 build/client 目录
 
       - name: Deploy to GitHub Pages
         id: deployment
